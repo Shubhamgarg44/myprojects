@@ -12,7 +12,6 @@ function App() {
     <>
      <Navbar/>
      <Manager/>
-     <div>my Ui</div>
     </>
   )
 }
