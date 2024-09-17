@@ -1,12 +1,37 @@
-import React, { useState } from 'react'; // Import useState from React
+import React, { useState,useRef, useEffect } from 'react'; // Import useState from React
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io'; // Import eye icons for showing/hiding password
 
 const Manager = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [form, setform] = useState({site:"", username: "", password: ""})
+
+  const [passwordArray, setpasswordArray] = useState([])
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const  savepassword = (password) =>{
+   setpasswordArray([...passwordArray, form ])
+   localStorage.setItem("password", JSON.stringify([...passwordArray, form]))
+   console.log(passwordArray)
+  }
+
+  const handlechange = (e) => {
+    setform({
+       ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    let password = localStorage.getItem("password");
+    let passwordArray;
+    if(password){
+      setpasswordArray(JSON.parse(password))
+    }
+  }, []);
+  
 
   return (
     <div>
@@ -28,14 +53,15 @@ const Manager = () => {
 
         <span className='text-green-400 text-bold text-2xl'>/&gt;</span>
 
+        {/* input */}
+
         <div className="flex gap-8 flex-col p-4 text-black items-center">
-          <input placeholder='Enter Website URL ' className='rounded-full border border-green-300 w-full py-1 p-4' type="text" />
+          <input value={form.site} placeholder='Enter Website URL' onChange={handlechange} name="site"  className='rounded-full border border-green-300 w-full py-1 p-4' type="text" />
           
           <div className="flex gap-4 w-full justify-between relative">
-            <input className='rounded-full border border-green-300 w-full py-1 p-4' type="text" placeholder='Enter User Name ' />
-            <input 
-              className='rounded-full border border-green-300 w-full py-1 p-4' 
-              type={showPassword ? 'text' : 'password'} 
+            <input value={form.username} name="username" className='rounded-full border border-green-300 w-full py-1 p-4' type="text"  onChange={handlechange}  placeholder='Enter User Name ' />
+            <input value={form.password} className='rounded-full border border-green-300 w-full py-1 p-4' 
+              type={showPassword ? 'text' : 'password'} name="password"  onChange={handlechange}  
               placeholder='Enter Password' 
             />
             <span className='absolute w-14 right-[1%] top-[22%]'>
@@ -47,7 +73,7 @@ const Manager = () => {
             </span>
           </div>
 
-          <button className='flex justify-center items-center bg-green-500 rounded-full px-4 py-2 gap-2 w-fit hover:bg-green-600'>
+          <button onClick={savepassword} className='flex justify-center items-center bg-green-500 rounded-full px-4 py-2 gap-2 w-fit hover:bg-green-600'>
             <lord-icon
               src="https://cdn.lordicon.com/hqymfzvj.json"
               trigger="hover"
