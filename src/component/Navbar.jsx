@@ -2,8 +2,8 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-   <nav className='bg-purple-200'>
-    <div className="mycontainer flex justify-between items-center gap-10 px-4 h-14 py-5">
+   <nav className='bg-purple-300'>
+    <div className="mycontainer flex justify-between items-center gap-10 px-2 h-14 py-5">
 
     <div className='logo font-bold '>
      <span className='text-green-400 text-xl'>&lt;</span> 
@@ -19,6 +19,10 @@ const Navbar = () => {
             <a href=""></a>
         </li>
     </ul>
+    <button className='bg-slate-400 rounded-2xl flex justify-between items-center font-bold'>
+     <img className='w-10 h-10 object-cover '  src="/github-sign.png" alt="" />
+      GITHUB
+    </button>
     </div>
    </nav>
   )
